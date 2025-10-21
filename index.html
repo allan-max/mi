@@ -6,135 +6,138 @@
 <title>A Nossa História de Amor</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Inter', sans-serif; background:#0f0f0f; color:#fef3f3; overflow-x:hidden; }
 
-    /* Animações Splash */
-    @keyframes fadeInScale { 0% { opacity:0; transform:scale(0.8);} 100% {opacity:1; transform:scale(1);} }
-    @keyframes pulseOpacity { 0%,100% { opacity:0.7;} 50% {opacity:1;} }
-    @keyframes pulseGlow { 0%,100% { text-shadow:0 0 5px #fef2f2,0 0 10px #fee2e2;} 50% { text-shadow:0 0 10px #fca5a5,0 0 20px #f87171; } }
+    /* Animações */
+    @keyframes fadeInScale { 0% { opacity:0; transform:scale(0.9);} 100% {opacity:1; transform:scale(1);} }
+    @keyframes pulseOpacity { 0%,100% { opacity:0.8;} 50% {opacity:1;} }
+    @keyframes pulseGlow { 0%,100% { text-shadow:0 0 5px #fbb6b6,0 0 10px #f87171;} 50% { text-shadow:0 0 15px #fca5a5,0 0 30px #f43f5e; } }
+
     .animate-fade-in-scale { animation: fadeInScale 1.5s ease-out forwards; }
-    .animate-pulse-opacity { animation: pulseOpacity 2s infinite ease-in-out; }
-    .text-glow { animation: pulseGlow 4s infinite ease-in-out; color:#b91c1c; }
+    .animate-pulse-opacity { animation: pulseOpacity 2.5s infinite ease-in-out; }
+    .text-glow { animation: pulseGlow 4s infinite ease-in-out; color:#f43f5e; }
 
-    #main-container { background-image: url('./mi.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; position:relative; }
-    #main-container::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background-color:rgba(255,255,255,0.7); z-index:-1; border-radius:2rem; }
-
-    /* Ícones */
-    #cruzeiro-section img, #taylor-swift-section img { width:50px; height:50px; }
-
-    /* Player Spotify flutuante e responsivo */
-    #spotify-player {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: clamp(200px, 25vw, 300px); /* largura responsiva */
-        height: clamp(60px, 6vw, 80px);   /* altura proporcional */
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        z-index: 50;
-        cursor: grab;
+    #main-container { 
+        background-image: url('./mi.jpg'); 
+        background-size: cover; 
+        background-position: center; 
+        position: relative; 
+        border-radius: 2rem; 
+        overflow: hidden;
+        box-shadow: 0 0 50px rgba(244,63,94,0.5);
+        backdrop-filter: blur(10px);
     }
-    #spotify-player:active { cursor: grabbing; }
 
-    /* Efeitos de fade-in para seções */
+    #main-container::before {
+        content:""; position:absolute; top:0; left:0; right:0; bottom:0;
+        background: rgba(0,0,0,0.55); z-index:-1;
+    }
+
     .fade-slide-up { opacity:0; transform: translateY(20px); transition: all 1s ease-out; }
     .fade-slide-up.show { opacity:1; transform: translateY(0); }
+
+    .spinner { animation: spin 1s linear infinite; }
+    @keyframes spin { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
+
+    /* Corações caindo na splash */
+    .splash-heart {
+        position: absolute;
+        font-size: 1rem;
+        color: #fff;
+        opacity: 0.5;
+        animation: fall linear forwards;
+        pointer-events: none;
+    }
+    @keyframes fall {
+        0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.6; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
 </style>
 </head>
-<body class="bg-gradient-to-br from-red-50 to-pink-200 flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950">
 
 <!-- Splash -->
-<div id="splash-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 to-red-200 flex flex-col items-center justify-center p-8 z-50 transition-opacity duration-1000 cursor-pointer">
-    <img src="./mi e eu .jpg" alt="Mirella e Você" class="w-24 h-24 rounded-full object-cover mb-8 opacity-0" id="splash-img">
-    <h1 class="text-5xl md:text-7xl font-extralight text-red-700 mb-6 opacity-0" id="splash-title">Para a Mirella</h1>
-    <p class="text-xl md:text-2xl text-red-500 font-medium opacity-0" id="splash-text">Clique para revelar a surpresa</p>
+<div id="splash-screen" class="fixed inset-0 bg-black/80 flex flex-col items-center justify-center p-8 z-50 cursor-pointer">
+    <img src="./mi e eu .jpg" alt="Mirella e Você" class="w-28 h-28 rounded-full object-cover mb-8 opacity-0" id="splash-img">
+    <h1 class="text-5xl md:text-7xl font-extralight text-pink-400 mb-6 opacity-0" id="splash-title">Para a Mirella</h1>
+    <p class="text-xl md:text-2xl text-pink-300 font-medium opacity-0" id="splash-text">Clique para revelar a surpresa</p>
 </div>
 
 <!-- Conteúdo principal -->
-<div id="main-container" class="w-full max-w-4xl bg-white/80 backdrop-blur-md p-6 md:p-12 rounded-[2rem] shadow-2xl text-center border-4 border-red-300 transform hover:shadow-red-300/50 transition duration-500 opacity-0 hidden">
+<div id="main-container" class="w-full max-w-4xl p-8 md:p-12 rounded-2xl opacity-0 hidden">
 
-    <div class="text-6xl mb-4 animate-bounce">&#10084;&#65039;</div>
-    <h1 class="text-4xl md:text-6xl font-extrabold mb-10 text-glow">
-        Para a minha Mirella
-    </h1>
+    <div class="text-6xl mb-4 animate-pulse-opacity text-pink-400">&#10084;&#65039;</div>
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-10 text-glow">Para a minha Mirella</h1>
 
-    <div class="mb-10 text-gray-600 font-semibold text-sm md:text-base">
-        Olhe só a jornada que construímos desde: <span class="text-red-500 text-xl font-bold">17 de Setembro de 2025</span>
+    <div class="mb-10 text-pink-200 font-medium text-sm md:text-base">
+        Olhe só a jornada que construímos desde: <span class="text-pink-400 text-xl font-bold">17 de Setembro de 2025</span>
     </div>
 
     <!-- Contador -->
     <div id="counter-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 justify-center fade-slide-up">
-        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
-            <span id="days" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
-            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">DIAS</span>
+        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="days" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-xl font-bold mt-1">DIAS</span>
         </div>
-        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
-            <span id="hours" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
-            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">HORAS</span>
+        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="hours" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-xl font-bold mt-1">HORAS</span>
         </div>
-        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
-            <span id="minutes" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
-            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">MINUTOS</span>
+        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="minutes" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-xl font-bold mt-1">MINUTOS</span>
         </div>
-        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
-            <span id="seconds" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
-            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">SEGUNDOS</span>
+        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="seconds" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-xl font-bold mt-1">SEGUNDOS</span>
         </div>
     </div>
 
-    <p class="text-base md:text-xl text-gray-800 font-light mt-12">
-        Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.
-    </p>
-    <div class="mt-4 mb-10 text-red-400 font-semibold text-lg">
-        Fique sabendo que eu te amo muitos!!!!
-    </div>
+    <p class="text-pink-200 text-base md:text-xl font-light mt-12">Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.</p>
+    <div class="mt-4 mb-10 text-pink-400 font-semibold text-lg">Fique sabendo que eu te amo muitos!!!!</div>
 
     <!-- Interesses -->
-    <h2 class="text-3xl font-extrabold text-red-600 mb-8 mt-12 fade-slide-up">Seus Interesses Favoritos</h2>
+    <h2 class="text-3xl font-extrabold text-pink-400 mb-8 mt-12 fade-slide-up">Seus Interesses Favoritos</h2>
     <div class="flex flex-col lg:flex-row gap-6 fade-slide-up">
-        <div id="cruzeiro-section" class="flex-1 bg-blue-50 border-2 border-blue-200 p-4 rounded-xl text-left shadow-lg">
+        <div id="cruzeiro-section" class="flex-1 bg-black/50 border border-blue-800 p-4 rounded-xl text-left shadow-lg">
             <div class="flex items-center justify-center space-x-3 mb-4">
-                <img src="./cruzeiro.png" alt="Ícone do Cruzeiro" class="rounded-full">
-                <h3 class="text-xl font-bold text-blue-800">Cruzeiro Esporte Clube</h3>
+                <img src="./cruzeiro.png" alt="Ícone do Cruzeiro" class="rounded-full w-12 h-12">
+                <h3 class="text-xl font-bold text-blue-300">Cruzeiro Esporte Clube</h3>
             </div>
-            <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
-                <svg class="spinner w-8 h-8 text-blue-500" viewBox="0 0 50 50">
+            <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-400">
+                <svg class="spinner w-8 h-8 text-blue-300" viewBox="0 0 50 50">
                     <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
                 </svg>
                 <p class="mt-2 text-sm">Carregando dados do time...</p>
             </div>
-            <div id="cruzeiro-content" class="text-gray-700 space-y-3 hidden"></div>
+            <div id="cruzeiro-content" class="text-gray-300 space-y-3 hidden"></div>
         </div>
 
-        <div id="taylor-swift-section" class="flex-1 bg-pink-50 border-2 border-pink-200 p-4 rounded-xl text-left shadow-lg">
+        <div id="taylor-swift-section" class="flex-1 bg-black/50 border border-pink-400 p-4 rounded-xl text-left shadow-lg">
             <div class="flex items-center justify-center space-x-3 mb-4">
-                <img src="./icon taylor.jpg" alt="Ícone da Taylor Swift" class="rounded-full">
-                <h3 class="text-xl font-bold text-pink-800">Taylor Swift News</h3>
+                <img src="./icon taylor.jpg" alt="Ícone da Taylor Swift" class="rounded-full w-12 h-12">
+                <h3 class="text-xl font-bold text-pink-300">Taylor Swift News</h3>
             </div>
-            <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
-                <svg class="spinner w-8 h-8 text-pink-500" viewBox="0 0 50 50">
+            <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-400">
+                <svg class="spinner w-8 h-8 text-pink-300" viewBox="0 0 50 50">
                     <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
                 </svg>
                 <p class="mt-2 text-sm">Buscando novidades da Taylor...</p>
             </div>
-            <div id="taylor-swift-content" class="text-gray-700 space-y-3 hidden"></div>
+            <div id="taylor-swift-content" class="text-gray-300 space-y-3 hidden"></div>
         </div>
     </div>
 
-    <div class="mt-16 pt-4 border-t border-gray-200 flex items-center justify-end space-x-2 text-xs text-gray-400">
-        <p class="font-semibold italic">Obs: não vou colocar o pedro pascal aqui</p>
+    <div class="mt-16 pt-4 border-t border-gray-700 flex items-center justify-end space-x-2 text-xs text-gray-500">
+        <p class="font-semibold italic">Obs: não vou colocar o Pedro Pascal aqui</p>
         <img src="./pascal.jpeg" alt="Pedro Pascal" class="w-8 h-8 rounded-full opacity-75"
         onerror="this.onerror=null; this.src='https://placehold.co/32x32/D1D5DB/4B5563?text=PP';">
     </div>
 </div>
 
-<!-- Player Spotify Arrastável -->
-<iframe id="spotify-player"
-    src="https://open.spotify.com/embed/track/4qmFC3Jz5aQ0erlk2OSi2X?utm_source=generator"
-    frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    allowfullscreen>
-</iframe>
+<!-- Música de fundo -->
+<audio id="background-music" src="./Taylor Swift - Wood (Lyrics).mp3" autoplay loop></audio>
 
 <script>
 // Contador
@@ -157,7 +160,7 @@ function updateTimer() {
 }
 updateTimer(); setInterval(updateTimer,1000);
 
-// Splash animations escalonadas
+// Splash animações
 window.addEventListener('DOMContentLoaded', ()=>{
     const img=document.getElementById('splash-img');
     const title=document.getElementById('splash-title');
@@ -166,20 +169,16 @@ window.addEventListener('DOMContentLoaded', ()=>{
     setTimeout(()=>title.classList.add('animate-fade-in-scale'),800);
     setTimeout(()=>text.classList.add('animate-pulse-opacity','animate-fade-in-scale'),1300);
 });
-
-// Splash click
 document.getElementById('splash-screen').addEventListener('click', ()=>{
     const splash=document.getElementById('splash-screen');
     const main=document.getElementById('main-container');
     splash.style.opacity='0';
     setTimeout(()=>{ splash.style.display='none'; },1000);
     main.classList.remove('hidden'); main.style.opacity='1';
-
-    // Aparecer seções com fade-slide-up
     document.querySelectorAll('.fade-slide-up').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*300));
 });
 
-// Renderização de dados fictícios
+// Dados fictícios
 function renderCruzeiroData(data){
     const content=document.getElementById('cruzeiro-content');
     document.getElementById('cruzeiro-loading').classList.add('hidden');
@@ -204,27 +203,37 @@ function fetchDynamicData(){
 }
 fetchDynamicData();
 
-// Drag Spotify
-const spotify=document.getElementById('spotify-player');
-let offsetX, offsetY, isDragging=false;
-spotify.addEventListener('mousedown', e=>{
-    isDragging=true;
-    offsetX=e.clientX - spotify.getBoundingClientRect().left;
-    offsetY=e.clientY - spotify.getBoundingClientRect().top;
+// Corações caindo cinematográficos na splash
+function createFallingHearts() {
+    const splash = document.getElementById('splash-screen');
+    const heart = document.createElement('div');
+    heart.classList.add('splash-heart');
+    heart.textContent = '❤️';
+    const size = 10 + Math.random() * 20;
+    heart.style.fontSize = size + 'px';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    const duration = 5 + Math.random() * 5;
+    heart.style.animationDuration = duration + 's';
+    heart.style.opacity = 0.3 + Math.random() * 0.7;
+    splash.appendChild(heart);
+    setTimeout(() => heart.remove(), duration * 1000);
+}
+setInterval(createFallingHearts, 400);
+
+// Fade-in suave da música
+const music = document.getElementById('background-music');
+music.volume = 0;
+music.play().then(() => {
+    let vol = 0;
+    const fadeIn = setInterval(()=>{
+        vol += 0.01;
+        if(vol >= 0.5){
+            vol = 0.5;
+            clearInterval(fadeIn);
+        }
+        music.volume = vol;
+    },100);
 });
-document.addEventListener('mousemove', e=>{
-    if(isDragging){
-        let newLeft=e.clientX - offsetX;
-        let newTop=e.clientY - offsetY;
-        const maxLeft=window.innerWidth - spotify.offsetWidth;
-        const maxTop=window.innerHeight - spotify.offsetHeight;
-        newLeft=Math.min(Math.max(0,newLeft),maxLeft);
-        newTop=Math.min(Math.max(0,newTop),maxTop);
-        spotify.style.left=newLeft+'px';
-        spotify.style.top=newTop+'px';
-    }
-});
-document.addEventListener('mouseup', ()=>{ isDragging=false; });
 </script>
 </body>
 </html>

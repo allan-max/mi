@@ -6,59 +6,60 @@
 <title>A Nossa História de Amor</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-    body { font-family: 'Inter', sans-serif; background:#0f0f0f; color:#fef3f3; overflow-x:hidden; }
+body { font-family: 'Inter', sans-serif; margin:0; padding:0; overflow-x:hidden; background:#0f0f0f; color:#fef3f3; }
 
-    /* Animações */
-    @keyframes fadeInScale { 0% { opacity:0; transform:scale(0.9);} 100% {opacity:1; transform:scale(1);} }
-    @keyframes pulseOpacity { 0%,100% { opacity:0.8;} 50% {opacity:1;} }
-    @keyframes pulseGlow { 0%,100% { text-shadow:0 0 5px #fbb6b6,0 0 10px #f87171;} 50% { text-shadow:0 0 15px #fca5a5,0 0 30px #f43f5e; } }
+@keyframes fadeInScale { 0% { opacity:0; transform:scale(0.9);} 100% {opacity:1; transform:scale(1);} }
+@keyframes pulseOpacity { 0%,100% { opacity:0.8;} 50% {opacity:1;} }
+@keyframes pulseGlow { 0%,100% { text-shadow:0 0 5px #fbb6b6,0 0 10px #f87171;} 50% { text-shadow:0 0 15px #fca5a5,0 0 30px #f43f5e; } }
 
-    .animate-fade-in-scale { animation: fadeInScale 1.5s ease-out forwards; }
-    .animate-pulse-opacity { animation: pulseOpacity 2.5s infinite ease-in-out; }
-    .text-glow { animation: pulseGlow 4s infinite ease-in-out; color:#f43f5e; }
+.animate-fade-in-scale { animation: fadeInScale 1.5s ease-out forwards; }
+.animate-pulse-opacity { animation: pulseOpacity 2.5s infinite ease-in-out; }
+.text-glow { animation: pulseGlow 4s infinite ease-in-out; color:#f43f5e; }
 
-    #main-container { 
-        background-image: url('./mi.jpg'); 
-        background-size: cover; 
-        background-position: center; 
-        position: relative; 
-        border-radius: 2rem; 
-        overflow: hidden;
-        box-shadow: 0 0 50px rgba(244,63,94,0.5);
-        backdrop-filter: blur(10px);
-        z-index: 5;
-    }
+#main-container { 
+    background-image: url('./mi.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    position: relative; 
+    border-radius: 2rem; 
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    z-index: 5;
+    width: 95%;
+    max-width: 1200px;
+    padding: 2rem;
+    box-shadow: 0 0 50px rgba(244,63,94,0.5);
+}
 
-    #main-container::before {
-        content:""; position:absolute; top:0; left:0; right:0; bottom:0;
-        background: rgba(0,0,0,0.55); z-index:-1;
-    }
+#main-container::before {
+    content:""; position:absolute; top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.55); z-index:-1;
+}
 
-    .fade-slide-up { opacity:0; transform: translateY(20px); transition: all 1s ease-out; }
-    .fade-slide-up.show { opacity:1; transform: translateY(0); }
+.fade-slide-up { opacity:0; transform: translateY(20px); transition: all 1s ease-out; }
+.fade-slide-up.show { opacity:1; transform: translateY(0); }
 
-    /* Corações caindo atrás da seção */
-    #hearts-container {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0; /* fica atrás da seção principal */
-    }
-    .heart {
-        position: absolute;
-        font-size: 1rem;
-        color: #fff;
-        opacity: 0.5;
-        animation: fall linear forwards;
-    }
-    @keyframes fall {
-        0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.6; }
-        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-    }
+#hearts-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.heart {
+    position: absolute;
+    color: #fff;
+    opacity: 0.6;
+    user-select: none;
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 relative">
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
 
 <!-- Splash -->
 <div id="splash-screen" class="fixed inset-0 bg-black/80 flex flex-col items-center justify-center p-8 z-50 cursor-pointer">
@@ -67,49 +68,50 @@
     <p class="text-xl md:text-2xl text-pink-300 font-medium opacity-0" id="splash-text">Clique para revelar a surpresa</p>
 </div>
 
-<!-- Corações atrás da seção principal -->
+<!-- Corações -->
 <div id="hearts-container"></div>
 
 <!-- Conteúdo principal -->
-<div id="main-container" class="w-full max-w-4xl p-8 md:p-12 rounded-2xl opacity-0 hidden relative">
+<div id="main-container" class="opacity-0 hidden flex flex-col items-center text-center relative">
 
     <div class="text-6xl mb-4 animate-pulse-opacity text-pink-400">&#10084;&#65039;</div>
-    <h1 class="text-4xl md:text-6xl font-extrabold mb-10 text-glow">Para a minha Mirella</h1>
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-6 text-glow">Para a minha Mirella</h1>
 
-    <div class="mb-10 text-pink-200 font-medium text-sm md:text-base">
-        Olhe só a jornada que construímos desde: <span class="text-pink-400 text-xl font-bold">17 de Setembro de 2025</span>
-    </div>
+    <p class="text-pink-200 font-medium text-sm md:text-base mb-10">
+        Olhe só a jornada que construímos desde: 
+        <span class="text-pink-400 text-xl font-bold">17 de Setembro de 2025</span>
+    </p>
 
     <!-- Contador -->
-    <div id="counter-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 justify-center fade-slide-up">
-        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
-            <span id="days" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
-            <span class="text-sm md:text-xl font-bold mt-1">DIAS</span>
+    <div id="counter-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 justify-center w-full max-w-4xl fade-slide-up">
+        <div class="bg-black/50 p-4 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="days" class="text-3xl md:text-5xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-base font-bold mt-1">DIAS</span>
         </div>
-        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
-            <span id="hours" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
-            <span class="text-sm md:text-xl font-bold mt-1">HORAS</span>
+        <div class="bg-black/50 p-4 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="hours" class="text-3xl md:text-5xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-base font-bold mt-1">HORAS</span>
         </div>
-        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
-            <span id="minutes" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
-            <span class="text-sm md:text-xl font-bold mt-1">MINUTOS</span>
+        <div class="bg-black/50 p-4 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="minutes" class="text-3xl md:text-5xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-base font-bold mt-1">MINUTOS</span>
         </div>
-        <div class="bg-black/50 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
-            <span id="seconds" class="text-4xl md:text-7xl font-black text-pink-300 block">00</span>
-            <span class="text-sm md:text-xl font-bold mt-1">SEGUNDOS</span>
+        <div class="bg-black/50 p-4 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-pink-400">
+            <span id="seconds" class="text-3xl md:text-5xl font-black text-pink-300 block">00</span>
+            <span class="text-sm md:text-base font-bold mt-1">SEGUNDOS</span>
         </div>
     </div>
 
-    <p class="text-pink-200 text-base md:text-xl font-light mt-12">Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.</p>
-    <div class="mt-4 mb-10 text-pink-400 font-semibold text-lg">Fique sabendo que eu te amo muitos!!!!</div>
+    <p class="text-pink-200 text-base md:text-lg font-light mt-8 mb-8">Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.</p>
+    <div class="text-pink-400 font-semibold text-lg mb-10">Fique sabendo que eu te amo muitos!!!!</div>
 
-    <!-- Interesses favoritos -->
-    <h2 class="text-3xl font-extrabold text-pink-400 mb-8 mt-12 fade-slide-up">Seus Interesses Favoritos</h2>
-    <div class="flex flex-col lg:flex-row gap-6 fade-slide-up">
+    <!-- Interesses -->
+    <h2 class="text-2xl md:text-3xl font-extrabold text-pink-400 mb-6 fade-slide-up">Seus Interesses Favoritos</h2>
+    <div class="flex flex-col md:flex-row gap-6 w-full fade-slide-up">
         <div id="cruzeiro-section" class="flex-1 bg-blue-50 border-2 border-blue-200 p-4 rounded-xl text-left shadow-lg">
-            <div class="flex items-center justify-center space-x-3 mb-4">
+            <div class="flex items-center space-x-3 mb-4">
                 <img src="./cruzeiro.png" alt="Ícone do Cruzeiro" class="rounded-full w-12 h-12">
-                <h3 class="text-xl font-bold text-blue-800">Cruzeiro Esporte Clube</h3>
+                <h3 class="text-lg md:text-xl font-bold text-blue-800">Cruzeiro Esporte Clube</h3>
             </div>
             <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
                 <svg class="spinner w-8 h-8 text-blue-500" viewBox="0 0 50 50">
@@ -117,13 +119,13 @@
                 </svg>
                 <p class="mt-2 text-sm">Carregando dados do time...</p>
             </div>
-            <div id="cruzeiro-content" class="text-gray-700 space-y-3 hidden"></div>
+            <div id="cruzeiro-content" class="text-gray-700 space-y-2 hidden"></div>
         </div>
 
         <div id="taylor-swift-section" class="flex-1 bg-pink-50 border-2 border-pink-200 p-4 rounded-xl text-left shadow-lg">
-            <div class="flex items-center justify-center space-x-3 mb-4">
+            <div class="flex items-center space-x-3 mb-4">
                 <img src="./icon taylor.jpg" alt="Ícone da Taylor Swift" class="rounded-full w-12 h-12">
-                <h3 class="text-xl font-bold text-pink-800">Taylor Swift News</h3>
+                <h3 class="text-lg md:text-xl font-bold text-pink-800">Taylor Swift News</h3>
             </div>
             <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
                 <svg class="spinner w-8 h-8 text-pink-500" viewBox="0 0 50 50">
@@ -131,19 +133,19 @@
                 </svg>
                 <p class="mt-2 text-sm">Buscando novidades da Taylor...</p>
             </div>
-            <div id="taylor-swift-content" class="text-gray-700 space-y-3 hidden"></div>
+            <div id="taylor-swift-content" class="text-gray-700 space-y-2 hidden"></div>
         </div>
     </div>
 
-    <!-- Observação final -->
-    <div class="mt-16 pt-4 border-t border-gray-200 flex items-center justify-end space-x-2 text-xs text-gray-400">
+    <!-- Obs -->
+    <div class="mt-12 pt-4 border-t border-gray-200 flex items-center justify-end space-x-2 text-xs text-gray-400">
         <p class="font-semibold italic">Obs: não vou colocar o pedro pascal aqui</p>
         <img src="./pascal.jpeg" alt="Pedro Pascal" class="w-8 h-8 rounded-full opacity-75"
         onerror="this.onerror=null; this.src='https://placehold.co/32x32/D1D5DB/4B5563?text=PP';">
     </div>
 </div>
 
-<!-- Música de fundo -->
+<!-- Música -->
 <audio id="background-music" src="./Taylor Swift - Wood (Lyrics).mp3" autoplay loop></audio>
 
 <script>
@@ -153,21 +155,16 @@ const counterElements = { days: document.getElementById('days'), hours: document
 function updateTimer() {
     const now = new Date().getTime();
     let distance = now - startDate;
-    if(distance<0){distance=0;}
+    if(distance<0) distance=0;
     const second=1000,minute=second*60,hour=minute*60,day=hour*24;
-    const totalDays=Math.floor(distance/day);
-    const hours=Math.floor((distance % day)/hour);
-    const minutes=Math.floor((distance % hour)/minute);
-    const seconds=Math.floor((distance % minute)/second);
-    const pad = num => String(num).padStart(2,'0');
-    counterElements.days.textContent = totalDays.toLocaleString('pt-BR');
-    counterElements.hours.textContent = pad(hours);
-    counterElements.minutes.textContent = pad(minutes);
-    counterElements.seconds.textContent = pad(seconds);
+    counterElements.days.textContent = Math.floor(distance/day).toLocaleString('pt-BR');
+    counterElements.hours.textContent = String(Math.floor((distance % day)/hour)).padStart(2,'0');
+    counterElements.minutes.textContent = String(Math.floor((distance % hour)/minute)).padStart(2,'0');
+    counterElements.seconds.textContent = String(Math.floor((distance % minute)/second)).padStart(2,'0');
 }
 updateTimer(); setInterval(updateTimer,1000);
 
-// Splash animações
+// Splash
 window.addEventListener('DOMContentLoaded', ()=>{
     const img=document.getElementById('splash-img');
     const title=document.getElementById('splash-title');
@@ -177,70 +174,27 @@ window.addEventListener('DOMContentLoaded', ()=>{
     setTimeout(()=>text.classList.add('animate-pulse-opacity','animate-fade-in-scale'),1300);
 });
 document.getElementById('splash-screen').addEventListener('click', ()=>{
-    const splash=document.getElementById('splash-screen');
+    document.getElementById('splash-screen').style.display='none';
     const main=document.getElementById('main-container');
-    splash.style.opacity='0';
-    setTimeout(()=>{ splash.style.display='none'; },1000);
     main.classList.remove('hidden'); main.style.opacity='1';
     document.querySelectorAll('.fade-slide-up').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*300));
 });
 
-// Renderização de dados fictícios
-function renderCruzeiroData(data){
-    const content=document.getElementById('cruzeiro-content');
-    document.getElementById('cruzeiro-loading').classList.add('hidden');
-    content.classList.remove('hidden');
-    content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p>
-        <p><strong>Resumo:</strong> ${data.summary}</p>
-        <p><strong>Próximo Jogo:</strong> ${data.match_info}</p>
-        <p><strong>Posição na Tabela:</strong> ${data.table_position}</p>`;
-}
-function renderTaylorSwiftData(data){
-    const content=document.getElementById('taylor-swift-content');
-    document.getElementById('taylor-swift-loading').classList.add('hidden');
-    content.classList.remove('hidden');
-    content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p>
-        <p><strong>Novidades:</strong> ${data.latest_news}</p>
-        <p><strong>Último Álbum:</strong> ${data.latest_album}</p>
-        <p><strong>Status da Turnê:</strong> ${data.tour_status}</p>`;
-}
-function fetchDynamicData(){
-    renderCruzeiroData({title:"Situação Atual do Cruzeiro", summary:"O time está indo bem no campeonato.", match_info:"Próximo jogo: ...", table_position:"3º lugar"});
-    renderTaylorSwiftData({title:"Novidades da Taylor Swift", latest_news:"Taylor Swift lançou seu 12º álbum.", latest_album:"The Life of a Showgirl", tour_status:"Turnê mundial confirmada"});
-}
+// Dados fictícios
+function renderCruzeiroData(data){ const content=document.getElementById('cruzeiro-content'); document.getElementById('cruzeiro-loading').classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p><p><strong>Resumo:</strong> ${data.summary}</p><p><strong>Próximo Jogo:</strong> ${data.match_info}</p><p><strong>Posição na Tabela:</strong> ${data.table_position}</p>`;}
+function renderTaylorSwiftData(data){ const content=document.getElementById('taylor-swift-content'); document.getElementById('taylor-swift-loading').classList.add('hidden'); content.classList.remove('hidden'); content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p><p><strong>Novidades:</strong> ${data.latest_news}</p><p><strong>Último Álbum:</strong> ${data.latest_album}</p><p><strong>Status da Turnê:</strong> ${data.tour_status}</p>`;}
+function fetchDynamicData(){ renderCruzeiroData({title:"Situação Atual do Cruzeiro", summary:"O time está indo bem no campeonato.", match_info:"Próximo jogo: ...", table_position:"3º lugar"}); renderTaylorSwiftData({title:"Novidades da Taylor Swift", latest_news:"Taylor Swift lançou seu 12º álbum.", latest_album:"The Life of a Showgirl", tour_status:"Turnê mundial confirmada"});}
 fetchDynamicData();
 
-// Corações caindo atrás da seção
-function createMainHearts() {
-    const container = document.getElementById('hearts-container');
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.textContent = '🤍';
-    const size = 10 + Math.random() * 20;
-    heart.style.fontSize = size + 'px';
-    heart.style.left = Math.random() * container.offsetWidth + 'px';
-    const duration = 5 + Math.random() * 5;
-    heart.style.animationDuration = duration + 's';
-    heart.style.opacity = 0.3 + Math.random() * 0.7;
-    container.appendChild(heart);
-    setTimeout(() => heart.remove(), duration * 1000);
-}
-setInterval(createMainHearts, 400);
+// Corações
+const heartsContainer=document.getElementById('hearts-container');
+let hearts=[];
+function createHeart(){ if(hearts.length>30) return; const heart=document.createElement('div'); heart.classList.add('heart'); heart.textContent='🤍'; const size=10+Math.random()*20; heart.style.fontSize=size+'px'; heart.style.left=Math.random()*heartsContainer.offsetWidth+'px'; heart.y=-20; heart.speed=1+Math.random()*2; heart.rotation=Math.random()*360; heart.rotationSpeed=(Math.random()-0.5)*5; heartsContainer.appendChild(heart); hearts.push(heart);}
+function animateHearts(){ for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.y+=h.speed; h.rotation+=h.rotationSpeed; h.style.transform=`translateY(${h.y}px) rotate(${h.rotation}deg)`; if(h.y>heartsContainer.offsetHeight){ heartsContainer.removeChild(h); hearts.splice(i,1); } } requestAnimationFrame(animateHearts);}
+animateHearts(); setInterval(createHeart,200);
 
 // Música
-const music = document.getElementById('background-music');
-music.volume = 0;
-music.play().then(() => {
-    let vol = 0;
-    const fadeIn = setInterval(()=>{
-        vol += 0.01;
-        if(vol >= 0.5){
-            vol = 0.5;
-            clearInterval(fadeIn);
-        }
-        music.volume = vol;
-    },100);
-});
+const music=document.getElementById('background-music'); music.volume=0; music.play().then(()=>{ let vol=0; const fadeIn=setInterval(()=>{ vol+=0.01; if(vol>=0.5){ vol=0.5; clearInterval(fadeIn); } music.volume=vol; },100); });
 </script>
 </body>
 </html>

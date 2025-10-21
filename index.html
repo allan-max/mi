@@ -26,6 +26,7 @@
         overflow: hidden;
         box-shadow: 0 0 50px rgba(244,63,94,0.5);
         backdrop-filter: blur(10px);
+        z-index: 5;
     }
 
     #main-container::before {
@@ -36,17 +37,19 @@
     .fade-slide-up { opacity:0; transform: translateY(20px); transition: all 1s ease-out; }
     .fade-slide-up.show { opacity:1; transform: translateY(0); }
 
-    .spinner { animation: spin 1s linear infinite; }
-    @keyframes spin { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
-
-    /* Corações caindo na splash */
-    .splash-heart {
+    /* Corações caindo atrás da seção */
+    #hearts-container {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0; /* fica atrás da seção principal */
+    }
+    .heart {
         position: absolute;
         font-size: 1rem;
         color: #fff;
         opacity: 0.5;
         animation: fall linear forwards;
-        pointer-events: none;
     }
     @keyframes fall {
         0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
@@ -55,7 +58,7 @@
     }
 </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950">
+<body class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 relative">
 
 <!-- Splash -->
 <div id="splash-screen" class="fixed inset-0 bg-black/80 flex flex-col items-center justify-center p-8 z-50 cursor-pointer">
@@ -64,8 +67,11 @@
     <p class="text-xl md:text-2xl text-pink-300 font-medium opacity-0" id="splash-text">Clique para revelar a surpresa</p>
 </div>
 
+<!-- Corações atrás da seção principal -->
+<div id="hearts-container"></div>
+
 <!-- Conteúdo principal -->
-<div id="main-container" class="w-full max-w-4xl p-8 md:p-12 rounded-2xl opacity-0 hidden">
+<div id="main-container" class="w-full max-w-4xl p-8 md:p-12 rounded-2xl opacity-0 hidden relative">
 
     <div class="text-6xl mb-4 animate-pulse-opacity text-pink-400">&#10084;&#65039;</div>
     <h1 class="text-4xl md:text-6xl font-extrabold mb-10 text-glow">Para a minha Mirella</h1>
@@ -97,40 +103,41 @@
     <p class="text-pink-200 text-base md:text-xl font-light mt-12">Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.</p>
     <div class="mt-4 mb-10 text-pink-400 font-semibold text-lg">Fique sabendo que eu te amo muitos!!!!</div>
 
-    <!-- Interesses -->
+    <!-- Interesses favoritos -->
     <h2 class="text-3xl font-extrabold text-pink-400 mb-8 mt-12 fade-slide-up">Seus Interesses Favoritos</h2>
     <div class="flex flex-col lg:flex-row gap-6 fade-slide-up">
-        <div id="cruzeiro-section" class="flex-1 bg-black/50 border border-blue-800 p-4 rounded-xl text-left shadow-lg">
+        <div id="cruzeiro-section" class="flex-1 bg-blue-50 border-2 border-blue-200 p-4 rounded-xl text-left shadow-lg">
             <div class="flex items-center justify-center space-x-3 mb-4">
                 <img src="./cruzeiro.png" alt="Ícone do Cruzeiro" class="rounded-full w-12 h-12">
-                <h3 class="text-xl font-bold text-blue-300">Cruzeiro Esporte Clube</h3>
+                <h3 class="text-xl font-bold text-blue-800">Cruzeiro Esporte Clube</h3>
             </div>
-            <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-400">
-                <svg class="spinner w-8 h-8 text-blue-300" viewBox="0 0 50 50">
+            <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
+                <svg class="spinner w-8 h-8 text-blue-500" viewBox="0 0 50 50">
                     <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
                 </svg>
                 <p class="mt-2 text-sm">Carregando dados do time...</p>
             </div>
-            <div id="cruzeiro-content" class="text-gray-300 space-y-3 hidden"></div>
+            <div id="cruzeiro-content" class="text-gray-700 space-y-3 hidden"></div>
         </div>
 
-        <div id="taylor-swift-section" class="flex-1 bg-black/50 border border-pink-400 p-4 rounded-xl text-left shadow-lg">
+        <div id="taylor-swift-section" class="flex-1 bg-pink-50 border-2 border-pink-200 p-4 rounded-xl text-left shadow-lg">
             <div class="flex items-center justify-center space-x-3 mb-4">
                 <img src="./icon taylor.jpg" alt="Ícone da Taylor Swift" class="rounded-full w-12 h-12">
-                <h3 class="text-xl font-bold text-pink-300">Taylor Swift News</h3>
+                <h3 class="text-xl font-bold text-pink-800">Taylor Swift News</h3>
             </div>
-            <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-400">
-                <svg class="spinner w-8 h-8 text-pink-300" viewBox="0 0 50 50">
+            <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
+                <svg class="spinner w-8 h-8 text-pink-500" viewBox="0 0 50 50">
                     <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
                 </svg>
                 <p class="mt-2 text-sm">Buscando novidades da Taylor...</p>
             </div>
-            <div id="taylor-swift-content" class="text-gray-300 space-y-3 hidden"></div>
+            <div id="taylor-swift-content" class="text-gray-700 space-y-3 hidden"></div>
         </div>
     </div>
 
-    <div class="mt-16 pt-4 border-t border-gray-700 flex items-center justify-end space-x-2 text-xs text-gray-500">
-        <p class="font-semibold italic">Obs: não vou colocar o Pedro Pascal aqui</p>
+    <!-- Observação final -->
+    <div class="mt-16 pt-4 border-t border-gray-200 flex items-center justify-end space-x-2 text-xs text-gray-400">
+        <p class="font-semibold italic">Obs: não vou colocar o pedro pascal aqui</p>
         <img src="./pascal.jpeg" alt="Pedro Pascal" class="w-8 h-8 rounded-full opacity-75"
         onerror="this.onerror=null; this.src='https://placehold.co/32x32/D1D5DB/4B5563?text=PP';">
     </div>
@@ -178,7 +185,7 @@ document.getElementById('splash-screen').addEventListener('click', ()=>{
     document.querySelectorAll('.fade-slide-up').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*300));
 });
 
-// Dados fictícios
+// Renderização de dados fictícios
 function renderCruzeiroData(data){
     const content=document.getElementById('cruzeiro-content');
     document.getElementById('cruzeiro-loading').classList.add('hidden');
@@ -203,24 +210,24 @@ function fetchDynamicData(){
 }
 fetchDynamicData();
 
-// Corações caindo cinematográficos na splash
-function createFallingHearts() {
-    const splash = document.getElementById('splash-screen');
+// Corações caindo atrás da seção
+function createMainHearts() {
+    const container = document.getElementById('hearts-container');
     const heart = document.createElement('div');
-    heart.classList.add('splash-heart');
-    heart.textContent = '❤️';
+    heart.classList.add('heart');
+    heart.textContent = '🤍';
     const size = 10 + Math.random() * 20;
     heart.style.fontSize = size + 'px';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.left = Math.random() * container.offsetWidth + 'px';
     const duration = 5 + Math.random() * 5;
     heart.style.animationDuration = duration + 's';
     heart.style.opacity = 0.3 + Math.random() * 0.7;
-    splash.appendChild(heart);
+    container.appendChild(heart);
     setTimeout(() => heart.remove(), duration * 1000);
 }
-setInterval(createFallingHearts, 400);
+setInterval(createMainHearts, 400);
 
-// Fade-in suave da música
+// Música
 const music = document.getElementById('background-music');
 music.volume = 0;
 music.play().then(() => {

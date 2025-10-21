@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Nossa História de Amor</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Animações Splash */
+    @keyframes fadeInScale { 0% { opacity:0; transform:scale(0.8);} 100% {opacity:1; transform:scale(1);} }
+    @keyframes pulseOpacity { 0%,100% { opacity:0.7;} 50% {opacity:1;} }
+    @keyframes pulseGlow { 0%,100% { text-shadow:0 0 5px #fef2f2,0 0 10px #fee2e2;} 50% { text-shadow:0 0 10px #fca5a5,0 0 20px #f87171; } }
+    .animate-fade-in-scale { animation: fadeInScale 1.5s ease-out forwards; }
+    .animate-pulse-opacity { animation: pulseOpacity 2s infinite ease-in-out; }
+    .text-glow { animation: pulseGlow 4s infinite ease-in-out; color:#b91c1c; }
+
+    #main-container { background-image: url('./mi.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; position:relative; }
+    #main-container::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background-color:rgba(255,255,255,0.7); z-index:-1; border-radius:2rem; }
+
+    /* Ícones */
+    #cruzeiro-section img, #taylor-swift-section img { width:50px; height:50px; }
+
+    /* Player Spotify flutuante e responsivo */
+    #spotify-player {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: clamp(200px, 25vw, 300px); /* largura responsiva */
+        height: clamp(60px, 6vw, 80px);   /* altura proporcional */
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        z-index: 50;
+        cursor: grab;
+    }
+    #spotify-player:active { cursor: grabbing; }
+
+    /* Efeitos de fade-in para seções */
+    .fade-slide-up { opacity:0; transform: translateY(20px); transition: all 1s ease-out; }
+    .fade-slide-up.show { opacity:1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-pink-200 flex items-center justify-center min-h-screen p-4">
+
+<!-- Splash -->
+<div id="splash-screen" class="fixed inset-0 bg-gradient-to-br from-pink-100 to-red-200 flex flex-col items-center justify-center p-8 z-50 transition-opacity duration-1000 cursor-pointer">
+    <img src="./mi e eu .jpg" alt="Mirella e Você" class="w-24 h-24 rounded-full object-cover mb-8 opacity-0" id="splash-img">
+    <h1 class="text-5xl md:text-7xl font-extralight text-red-700 mb-6 opacity-0" id="splash-title">Para a Mirella</h1>
+    <p class="text-xl md:text-2xl text-red-500 font-medium opacity-0" id="splash-text">Clique para revelar a surpresa</p>
+</div>
+
+<!-- Conteúdo principal -->
+<div id="main-container" class="w-full max-w-4xl bg-white/80 backdrop-blur-md p-6 md:p-12 rounded-[2rem] shadow-2xl text-center border-4 border-red-300 transform hover:shadow-red-300/50 transition duration-500 opacity-0 hidden">
+
+    <div class="text-6xl mb-4 animate-bounce">&#10084;&#65039;</div>
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-10 text-glow">
+        Para a minha Mirella
+    </h1>
+
+    <div class="mb-10 text-gray-600 font-semibold text-sm md:text-base">
+        Olhe só a jornada que construímos desde: <span class="text-red-500 text-xl font-bold">17 de Setembro de 2025</span>
+    </div>
+
+    <!-- Contador -->
+    <div id="counter-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 justify-center fade-slide-up">
+        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
+            <span id="days" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
+            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">DIAS</span>
+        </div>
+        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
+            <span id="hours" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
+            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">HORAS</span>
+        </div>
+        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
+            <span id="minutes" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
+            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">MINUTOS</span>
+        </div>
+        <div class="bg-red-100 p-4 md:p-6 rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 border-b-4 border-red-400">
+            <span id="seconds" class="text-4xl md:text-7xl font-black text-red-700 block">00</span>
+            <span class="text-sm md:text-xl text-red-500 font-bold mt-1">SEGUNDOS</span>
+        </div>
+    </div>
+
+    <p class="text-base md:text-xl text-gray-800 font-light mt-12">
+        Que este contador continue a somar muitos e muitos anos de amor e alegria ao seu lado.
+    </p>
+    <div class="mt-4 mb-10 text-red-400 font-semibold text-lg">
+        Fique sabendo que eu te amo muitos!!!!
+    </div>
+
+    <!-- Interesses -->
+    <h2 class="text-3xl font-extrabold text-red-600 mb-8 mt-12 fade-slide-up">Seus Interesses Favoritos</h2>
+    <div class="flex flex-col lg:flex-row gap-6 fade-slide-up">
+        <div id="cruzeiro-section" class="flex-1 bg-blue-50 border-2 border-blue-200 p-4 rounded-xl text-left shadow-lg">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <img src="./cruzeiro.png" alt="Ícone do Cruzeiro" class="rounded-full">
+                <h3 class="text-xl font-bold text-blue-800">Cruzeiro Esporte Clube</h3>
+            </div>
+            <div id="cruzeiro-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
+                <svg class="spinner w-8 h-8 text-blue-500" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
+                </svg>
+                <p class="mt-2 text-sm">Carregando dados do time...</p>
+            </div>
+            <div id="cruzeiro-content" class="text-gray-700 space-y-3 hidden"></div>
+        </div>
+
+        <div id="taylor-swift-section" class="flex-1 bg-pink-50 border-2 border-pink-200 p-4 rounded-xl text-left shadow-lg">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <img src="./icon taylor.jpg" alt="Ícone da Taylor Swift" class="rounded-full">
+                <h3 class="text-xl font-bold text-pink-800">Taylor Swift News</h3>
+            </div>
+            <div id="taylor-swift-loading" class="flex flex-col items-center justify-center p-6 text-gray-500">
+                <svg class="spinner w-8 h-8 text-pink-500" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5" stroke="currentColor" stroke-linecap="round"></circle>
+                </svg>
+                <p class="mt-2 text-sm">Buscando novidades da Taylor...</p>
+            </div>
+            <div id="taylor-swift-content" class="text-gray-700 space-y-3 hidden"></div>
+        </div>
+    </div>
+
+    <div class="mt-16 pt-4 border-t border-gray-200 flex items-center justify-end space-x-2 text-xs text-gray-400">
+        <p class="font-semibold italic">Obs: não vou colocar o pedro pascal aqui</p>
+        <img src="./pascal.jpeg" alt="Pedro Pascal" class="w-8 h-8 rounded-full opacity-75"
+        onerror="this.onerror=null; this.src='https://placehold.co/32x32/D1D5DB/4B5563?text=PP';">
+    </div>
+</div>
+
+<!-- Player Spotify Arrastável -->
+<iframe id="spotify-player"
+    src="https://open.spotify.com/embed/track/4qmFC3Jz5aQ0erlk2OSi2X?utm_source=generator"
+    frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    allowfullscreen>
+</iframe>
+
+<script>
+// Contador
+const startDate = new Date("2025-09-17T00:00:00").getTime();
+const counterElements = { days: document.getElementById('days'), hours: document.getElementById('hours'), minutes: document.getElementById('minutes'), seconds: document.getElementById('seconds') };
+function updateTimer() {
+    const now = new Date().getTime();
+    let distance = now - startDate;
+    if(distance<0){distance=0;}
+    const second=1000,minute=second*60,hour=minute*60,day=hour*24;
+    const totalDays=Math.floor(distance/day);
+    const hours=Math.floor((distance % day)/hour);
+    const minutes=Math.floor((distance % hour)/minute);
+    const seconds=Math.floor((distance % minute)/second);
+    const pad = num => String(num).padStart(2,'0');
+    counterElements.days.textContent = totalDays.toLocaleString('pt-BR');
+    counterElements.hours.textContent = pad(hours);
+    counterElements.minutes.textContent = pad(minutes);
+    counterElements.seconds.textContent = pad(seconds);
+}
+updateTimer(); setInterval(updateTimer,1000);
+
+// Splash animations escalonadas
+window.addEventListener('DOMContentLoaded', ()=>{
+    const img=document.getElementById('splash-img');
+    const title=document.getElementById('splash-title');
+    const text=document.getElementById('splash-text');
+    setTimeout(()=>img.classList.add('animate-fade-in-scale'),300);
+    setTimeout(()=>title.classList.add('animate-fade-in-scale'),800);
+    setTimeout(()=>text.classList.add('animate-pulse-opacity','animate-fade-in-scale'),1300);
+});
+
+// Splash click
+document.getElementById('splash-screen').addEventListener('click', ()=>{
+    const splash=document.getElementById('splash-screen');
+    const main=document.getElementById('main-container');
+    splash.style.opacity='0';
+    setTimeout(()=>{ splash.style.display='none'; },1000);
+    main.classList.remove('hidden'); main.style.opacity='1';
+
+    // Aparecer seções com fade-slide-up
+    document.querySelectorAll('.fade-slide-up').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), i*300));
+});
+
+// Renderização de dados fictícios
+function renderCruzeiroData(data){
+    const content=document.getElementById('cruzeiro-content');
+    document.getElementById('cruzeiro-loading').classList.add('hidden');
+    content.classList.remove('hidden');
+    content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p>
+        <p><strong>Resumo:</strong> ${data.summary}</p>
+        <p><strong>Próximo Jogo:</strong> ${data.match_info}</p>
+        <p><strong>Posição na Tabela:</strong> ${data.table_position}</p>`;
+}
+function renderTaylorSwiftData(data){
+    const content=document.getElementById('taylor-swift-content');
+    document.getElementById('taylor-swift-loading').classList.add('hidden');
+    content.classList.remove('hidden');
+    content.innerHTML=`<p class="text-lg font-bold text-center mb-2">${data.title}</p>
+        <p><strong>Novidades:</strong> ${data.latest_news}</p>
+        <p><strong>Último Álbum:</strong> ${data.latest_album}</p>
+        <p><strong>Status da Turnê:</strong> ${data.tour_status}</p>`;
+}
+function fetchDynamicData(){
+    renderCruzeiroData({title:"Situação Atual do Cruzeiro", summary:"O time está indo bem no campeonato.", match_info:"Próximo jogo: ...", table_position:"3º lugar"});
+    renderTaylorSwiftData({title:"Novidades da Taylor Swift", latest_news:"Taylor Swift lançou seu 12º álbum.", latest_album:"The Life of a Showgirl", tour_status:"Turnê mundial confirmada"});
+}
+fetchDynamicData();
+
+// Drag Spotify
+const spotify=document.getElementById('spotify-player');
+let offsetX, offsetY, isDragging=false;
+spotify.addEventListener('mousedown', e=>{
+    isDragging=true;
+    offsetX=e.clientX - spotify.getBoundingClientRect().left;
+    offsetY=e.clientY - spotify.getBoundingClientRect().top;
+});
+document.addEventListener('mousemove', e=>{
+    if(isDragging){
+        let newLeft=e.clientX - offsetX;
+        let newTop=e.clientY - offsetY;
+        const maxLeft=window.innerWidth - spotify.offsetWidth;
+        const maxTop=window.innerHeight - spotify.offsetHeight;
+        newLeft=Math.min(Math.max(0,newLeft),maxLeft);
+        newTop=Math.min(Math.max(0,newTop),maxTop);
+        spotify.style.left=newLeft+'px';
+        spotify.style.top=newTop+'px';
+    }
+});
+document.addEventListener('mouseup', ()=>{ isDragging=false; });
+</script>
+</body>
+</html>
